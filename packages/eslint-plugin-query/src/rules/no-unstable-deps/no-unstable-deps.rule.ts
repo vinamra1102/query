@@ -76,6 +76,11 @@ export const rule = createRule({
             element.argument.type === AST_NODE_TYPES.Identifier
           ) {
             trackedVariables[element.argument.name] = queryHook
+          } else if (
+            element.type === AST_NODE_TYPES.AssignmentPattern &&
+            element.left.type === AST_NODE_TYPES.Identifier
+          ) {
+            trackedVariables[element.left.name] = queryHook
           }
         }
       }

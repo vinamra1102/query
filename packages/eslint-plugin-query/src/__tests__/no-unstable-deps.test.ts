@@ -232,6 +232,29 @@ const baseTestCases = {
           ],
         },
         {
+          name: `array-destructured useQueries element with default value is passed to ${reactHookInvocation} as dependency`,
+          code: `
+            ${reactHookImport}
+            import { useQueries } from "@tanstack/react-query";
+
+            function Component() {
+              const [query = defaultValue] = useQueries({
+                queries: [
+                  { queryKey: ['test'], queryFn: () => 'test' }
+                ]
+              });
+              const callback = ${reactHookInvocation}(() => {}, [query]);
+              return;
+            }
+          `,
+          errors: [
+            {
+              messageId: 'noUnstableDeps',
+              data: { reactHook: reactHookAlias, queryHook: 'useQueries' },
+            },
+          ],
+        },
+        {
           name: `rest element of array-destructured useQueries is passed to ${reactHookInvocation} as dependency`,
           code: `
             ${reactHookImport}
